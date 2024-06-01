@@ -48,7 +48,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    _loadMessages();
+    // _loadMessages();
   }
 
   void _addMessage(types.Message message) {
@@ -216,16 +216,16 @@ class _ChatPageState extends State<ChatPage> {
     _addMessage(textMessage);
   }
 
-  void _loadMessages() async {
-    final response = await rootBundle.loadString('assets/messages.json');
-    final messages = (jsonDecode(response) as List)
-        .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
-        .toList();
+  // void _loadMessages() async {
+  //   final response = await rootBundle.loadString('assets/messages.json');
+  //   final messages = (jsonDecode(response) as List)
+  //       .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
+  //       .toList();
 
-    setState(() {
-      _messages = messages;
-    });
-  }
+  //   setState(() {
+  //     _messages = messages;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) => Scaffold(

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'main.dart';
 
 class LandingPage extends StatelessWidget {
@@ -68,14 +67,15 @@ class LandingPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => const ChatPage()),
                 );},
-                    child: Text('Take Quiz'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(9.0),
                       ),
                       backgroundColor: Colors.white, // Text color
-                      foregroundColor: Color(0xFF1D1836), // Button background color
+                      foregroundColor: Color.fromRGBO(29, 24, 54, 1), // Button background color
                     ),
+                    child: Text('Take Quiz'),
+
                   ),
                 ],
               ),
