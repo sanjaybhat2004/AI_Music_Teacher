@@ -1,52 +1,83 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // Import the file containing the ChatPage.
+// ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'main.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
-
   @override
-  Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100, // Increase the toolbar height to 150 pixels.
-        backgroundColor: Colors.white,
-        title: const Padding(
-          padding: EdgeInsets.only(top: 50), // Add top padding here
-          child: Text(
-            'Welome to MusicAI',
-            style: TextStyle(
-              color: Color.fromARGB(255, 58, 165, 252),
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        elevation: 0,
-      ),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
-      body: Center(
-        child: Column(
+  Widget build(BuildContext context) => MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Color(0xFF1D1836), // Background color with hex code
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset('assets/images/robot.svg'), // Display the SVG image.
-            const SizedBox(height: 50),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 58, 165, 252)
+            // Text with Inter font in white color.
+            Text(
+              'Start your musical journey',
+              style: TextStyle(fontSize: 32, fontFamily: 'Inter-Extraligh', color: Colors.white),
+            ),
+            Text(
+              'with',
+              style: TextStyle(fontSize: 32, fontFamily: 'Inter', color: Colors.white),
+            ),
+            // Text with Chopin Script font in white color.
+            Text(
+              'Lila',
+              style: TextStyle(fontSize: 64, fontFamily: 'Chopin Script', color: Colors.white),
+            ),
+            // Centered image with container for size control.
+            Center(
+              child: SizedBox(
+                width: 500,
+                height: 500,
+                child: Image.asset(
+                  'wallpaper.png',
+                  fit: BoxFit.cover, // Adjust as needed (cover, contain, etc.)
+                ),
               ),
-              onPressed: () {
-                Navigator.push(
+            ),
+            // Buttons in a column with padding and spacing
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0), // Adjust as needed
+              child: Column(
+                children: [
+                  // Add spacing between buttons
+                  SizedBox(height: 50.0), // Adjust spacing as needed
+
+                  ElevatedButton(
+                    onPressed: () {Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const ChatPage()),
-                );
-              },
-              child: const Text('Let\'s learn',
-               style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-               ),
+                );},
+                    child: Text('Let\'s Learn'),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(9.0),
+                      ),
+                      foregroundColor: Colors.white, // Text color
+                      backgroundColor: Color(0xFF482E99), // Button background color
+                    ),
+                  ),
+                  SizedBox(height: 50.0), // Adjust spacing as needed
+
+                  ElevatedButton(
+                    onPressed: () {Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChatPage()),
+                );},
+                    child: Text('Take Quiz'),
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(9.0),
+                      ),
+                      backgroundColor: Colors.white, // Text color
+                      foregroundColor: Color(0xFF1D1836), // Button background color
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
