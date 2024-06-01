@@ -31,8 +31,8 @@ class LandingPage extends StatelessWidget {
             // Centered image with container for size control.
             Center(
               child: SizedBox(
-                width: 500,
-                height: 500,
+                width: 300,
+                height: 300,
                 child: Image.asset(
                   'wallpaper.png',
                   fit: BoxFit.cover, // Adjust as needed (cover, contain, etc.)

@@ -96,3 +96,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+  - family: Inter
+    fonts:
+      - asset: fonts/Inter-ExtraLight.ttf
+#       - asset: fonts/Schyler-Italic.ttf
+        # style: ExtraLight
+  - family: Chopin Script
+    fonts:
+      - asset: fonts/ChopinScript.ttf
