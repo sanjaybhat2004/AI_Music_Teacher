@@ -15,6 +15,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 import 'landing_page.dart';
+import 'score_display.dart';
 
 void main() {
   initializeDateFormatting().then((_) => runApp(const MyApp()));
@@ -46,6 +47,7 @@ class _ChatPageState extends State<ChatPage> {
   final _agent = const types.User(
     id: 'f8b8f3b0-6b6b-4b7b-8b3b-3b6b6b8f8b8f',
   );
+  int _userScore = 0;
 
   @override
   void initState() {
@@ -64,28 +66,18 @@ class _ChatPageState extends State<ChatPage> {
       context: context,
       builder: (BuildContext context) => SafeArea(
         child: SizedBox(
-          height: 144,
+          height: 100,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  _handleImageSelection();
+                  _handleMediaSelection();
                 },
                 child: const Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: Text('Photo'),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  _handleFileSelection();
-                },
-                child: const Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: Text('File'),
+                  child: Text('Audio'),
                 ),
               ),
               TextButton(
@@ -101,53 +93,44 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
+  
+  String token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3NGRiYmE4ZmFlZTY5YWNhZTFiYzFiZTE5MDQ1MzY3OGY0NzI4MDMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzMzY0OTQzMjQxMDYwOTE2OTEyIiwiZW1haWwiOiJzYW5qdWJoYXQyMDA0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiaW50Q09FbXRtUEFqZXdsTUFzYWcxdyIsIm5iZiI6MTcxNzQwNzE3MSwiaWF0IjoxNzE3NDA3NDcxLCJleHAiOjE3MTc0MTEwNzEsImp0aSI6ImIzYzlhY2U3ZjhjODI2OWVkYmNhYTk2ZDYwZWY3ZTQ3Yjk1MzY3ZjMifQ.MVfudYDhJtyemDTbK3MjcG3IyQ9ug1UTywPWUcD_ptn9f383cbV3Ed6fa77YPO9T6Xr-qc3LgNuE0I9n5KWuKPNebTYnOkyeMzOKI7OfrPdj3XSxwFaBYOOh3DFcboIp4BcUVseT7T6PuU7iCYDBXwc9okR4Ftmvi-gMxn-16Fzqbxra1ZZR4dlErYUJP-rNnPRp_u9y8hxnwLZ8HEgyynBtLNn53IJ3cBLob6hg4Ux3C4-DCN0EjjOCKuCtyc8imTq-nFzpiq3HaXAmeIvEkR7Ogfeh1S6N-rBMDMdeeEhBxFyJQtmXRwy1q0qd9-10bPNrg8Oux_tfsZe9smvBpQ";
 
-  void _handleFileSelection() async {
+  Future<void> _handleMediaSelection() async {
     final result = await FilePicker.platform.pickFiles(
-      type: FileType.any,
-    );
-
-    if (result != null && result.files.single.path != null) {
-      final message = types.FileMessage(
-        author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: const Uuid().v4(),
-        mimeType: lookupMimeType(result.files.single.path!),
-        name: result.files.single.name,
-        size: result.files.single.size,
-        uri: result.files.single.path!,
-      );
-
-      _addMessage(message);
-    }
-  }
-
-  void _handleImageSelection() async {
-    final result = await ImagePicker().pickImage(
-      imageQuality: 70,
-      maxWidth: 1440,
-      source: ImageSource.gallery,
+      type: FileType.audio,
     );
 
     if (result != null) {
-      final bytes = await result.readAsBytes();
-      final image = await decodeImageFromList(bytes);
+      final file = result.files.first;
+      final bytes = file.bytes as List<int>;
+      final base64String = base64Encode(bytes);
 
-      final message = types.ImageMessage(
-        author: _user,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        height: image.height.toDouble(),
-        id: const Uuid().v4(),
-        name: result.name,
-        size: bytes.length,
-        uri: result.path,
-        width: image.width.toDouble(),
+      // print(base64String);
+
+      // _handleSendPressed("sddsd");
+
+      final url = Uri.parse("https://us-central1-maximal-codex-424206-f2.cloudfunctions.net/function-1"); // Replace with your actual URL
+      final body = jsonEncode({'audio': base64String});
+
+      final response = await http.post(
+        url,
+        headers: {'Authorization': 'bearer $token', 'Content-Type': 'application/json'},
+        body: body,
       );
 
-      _addMessage(message);
+      // Handle response
+      if (response.statusCode == 200) {
+        print('POST request successful!');
+        print(response.body);
+      } else {
+        print('POST request failed. Status code: ${response.statusCode}');
+      }
     }
   }
 
+
+  
   void _handleMessageTap(BuildContext _, types.Message message) async {
     if (message is types.FileMessage) {
       var localPath = message.uri;
@@ -218,10 +201,10 @@ class _ChatPageState extends State<ChatPage> {
     _addMessage(textMessage);
 
     const password =
-        'ya29.a0AXooCgti069KCI3eTbZrt_dJxMWs4ksVVgE2OQflMDLefca6YJLOBI8F1IOsSmZ7qWvSqz6nN5hPEz8Gl78R8egQMJz3t6kwi4joVO9eKfkC5LCBLrWF1YkRVv1fz8T6iD7jRBZpsE6AFAW2JuN8YGJDha9UlTDlrQyAFyuGQz4aCgYKAbQSARISFQHGX2Miy6_C6G_-aB5alayEyctCaA0178';
+        'ya29.a0AXooCgvKrgxqZzFxE5I7fB1oDmlSmTKN6sfwxaZvR9FtLn6ySWjfBIHWkvZFrFJP5c_H4g8gzMBJbk2Q_1mHT9h4HIp750dTg74fbr-zpUWMJZGNOd-kQM6PX5Jr-Y0wAMLz74MeeyWFApyCBOOez9mLXU1iVVpIlq6aWGVu7K12U-T6lI8AS9UNkRfpHgNblDRzOc9QKqS-elPrmtM4iMPt_Jp8hXo-mPWxXQDYRy5kkew76AiOyyAunkA0NBtCgVrguwPsaKjmwt0cE0yQW2GbkgmjbkxY4zX58-q7N4Q7wljbr8W6xLB2dxZhmksST5febBPQRR_f0tT291Vov-PO2rxdJ36phOCQ2E1Db36D_WBbNL6tdIC_0ix5btUSxJOfuxva2Ia9wUGx1qQlBQ_b7QYvjvVKaCgYKAbYSARASFQHGX2MiLxFBl_gYtaV1v5WHci_jFg0423';
     final response = await http.post(
       Uri.parse(
-        'https://global-dialogflow.googleapis.com/v3/projects/maximal-codex-424206-f2/locations/global/agents/3aaf65f9-e794-44f6-9916-6781890a71c9/sessions/newtest:detectIntent',
+        'https://global-dialogflow.googleapis.com/v3/projects/maximal-codex-424206-f2/locations/global/agents/3aaf65f9-e794-44f6-9916-6781890a71c9/sessions/newtest2:detectIntent',
       ),
       headers: {
         'Authorization': 'Bearer $password',
@@ -245,14 +228,25 @@ class _ChatPageState extends State<ChatPage> {
     if (data['queryResult'] == null) {
       print('error');
     } else {
+      final agentResponse = data['queryResult']['responseMessages'][0]['text']['text'][0];
       final textMessageAgent = types.TextMessage(
         author: _agent,
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: const Uuid().v4(),
-        text: data['queryResult']['responseMessages'][0]['text']['text'][0],
+        text: agentResponse,
       );
 
       _addMessage(textMessageAgent);
+
+      if( agentResponse.toLowerCase().contains(' correct') ) {
+        setState(() {
+        _userScore += 10;
+      });
+      }else if( agentResponse.toLowerCase().contains(' incorrect') ) {
+        setState(() {
+        _userScore -= 5;
+      });
+      }
     }
   }
 
@@ -269,7 +263,9 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Chat(
+    body: Stack(
+        children: [
+        Chat(
           messages: _messages,
           onAttachmentPressed: _handleAttachmentPressed,
           onMessageTap: _handleMessageTap,
@@ -279,5 +275,8 @@ class _ChatPageState extends State<ChatPage> {
           showUserNames: true,
           user: _user,
         ),
-      );
+         ScoreDisplay(score: _userScore),
+          ],
+    ),
+  );
 }

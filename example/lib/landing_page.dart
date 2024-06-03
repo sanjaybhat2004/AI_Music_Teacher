@@ -16,7 +16,7 @@ class LandingPage extends StatelessWidget {
             // Text with Inter font in white color.
             Text(
               'Start your musical journey',
-              style: TextStyle(fontSize: 32, fontFamily: 'Inter-Extraligh', color: Colors.white),
+              style: TextStyle(fontSize: 32, fontFamily: 'Inter', color: Colors.white),
             ),
             Text(
               'with',
@@ -30,8 +30,8 @@ class LandingPage extends StatelessWidget {
             // Centered image with container for size control.
             Center(
               child: SizedBox(
-                width: 300,
-                height: 300,
+                width: 420,
+                height: 420,
                 child: Image.asset(
                   'wallpaper.png',
                   fit: BoxFit.cover, // Adjust as needed (cover, contain, etc.)
@@ -44,38 +44,45 @@ class LandingPage extends StatelessWidget {
               child: Column(
                 children: [
                   // Add spacing between buttons
-                  SizedBox(height: 50.0), // Adjust spacing as needed
+                  SizedBox(height: 20.0), // Adjust spacing as needed
 
                   ElevatedButton(
-                    onPressed: () {Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ChatPage()),
-                );},
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ChatPage()),
+                    ),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(9.0),
                       ),
                       foregroundColor: Colors.white, // Text color
                       backgroundColor: Color(0xFF482E99), // Button background color
+                      minimumSize: Size(200, 50), // Set minimum size for both width and height
                     ),
-                    child: Text('Let\'s Learn'),
+                    child: Text(
+                      'Let\'s Learn',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36), // Make text bold
+                    ),
                   ),
-                  SizedBox(height: 50.0), // Adjust spacing as needed
+                  SizedBox(height: 20.0), // Adjust spacing as needed
 
                   ElevatedButton(
-                    onPressed: () {Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ChatPage()),
-                );},
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ChatPage()),
+                    ),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(9.0),
                       ),
                       backgroundColor: Colors.white, // Text color
                       foregroundColor: Color.fromRGBO(29, 24, 54, 1), // Button background color
+                      minimumSize: Size(200, 50), // Set minimum size for both width and height
                     ),
-                    child: Text('Take Quiz'),
-
+                    child: Text(
+                      'Take Quiz',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36), // Make text bold
+                    ),
                   ),
                 ],
               ),
