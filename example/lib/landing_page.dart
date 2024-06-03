@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
 
+
+
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
   @override
@@ -30,8 +32,8 @@ class LandingPage extends StatelessWidget {
             // Centered image with container for size control.
             Center(
               child: SizedBox(
-                width: 420,
-                height: 420,
+                width: 350,
+                height: 350,
                 child: Image.asset(
                   'wallpaper.png',
                   fit: BoxFit.cover, // Adjust as needed (cover, contain, etc.)
@@ -57,11 +59,11 @@ class LandingPage extends StatelessWidget {
                       ),
                       foregroundColor: Colors.white, // Text color
                       backgroundColor: Color(0xFF482E99), // Button background color
-                      minimumSize: Size(200, 50), // Set minimum size for both width and height
+                      minimumSize: Size(100, 50), // Set minimum size for both width and height
                     ),
                     child: Text(
                       'Let\'s Learn',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36), // Make text bold
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32), // Make text bold
                     ),
                   ),
                   SizedBox(height: 20.0), // Adjust spacing as needed
@@ -70,18 +72,19 @@ class LandingPage extends StatelessWidget {
                     onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const ChatPage()),
+                      
                     ),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(9.0),
                       ),
                       backgroundColor: Colors.white, // Text color
-                      foregroundColor: Color.fromRGBO(29, 24, 54, 1), // Button background color
-                      minimumSize: Size(200, 50), // Set minimum size for both width and height
+                      foregroundColor: Color(0xFF482E99), // Button background color
+                      minimumSize: Size(100, 50), // Set minimum size for both width and height
                     ),
                     child: Text(
-                      'Take Quiz',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 36), // Make text bold
+                      'Let\'s Play',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32), // Make text bold
                     ),
                   ),
                 ],

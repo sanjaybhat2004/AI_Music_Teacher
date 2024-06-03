@@ -21,7 +21,11 @@ void main() {
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+  String token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3NGRiYmE4ZmFlZTY5YWNhZTFiYzFiZTE5MDQ1MzY3OGY0NzI4MDMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzMzY0OTQzMjQxMDYwOTE2OTEyIiwiZW1haWwiOiJzYW5qdWJoYXQyMDA0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiZ0Z6NVBvb3JPeEJTUE9LSTh4ME5UdyIsIm5iZiI6MTcxNzQ0NjYyOCwiaWF0IjoxNzE3NDQ2OTI4LCJleHAiOjE3MTc0NTA1MjgsImp0aSI6ImQwMjg0NzUyZWI0NWJhMmEyZGJiY2EzYmI1YmEwOTVkZTA4MmI2NWMifQ.Wj0bpADFt7ENXmIUXCEYSss2HU5wC4Z1Dggf_GCH3_nz4FO_nWA9FJQPnENq6FTFVfbj5hR0tKW8hsl9FSa8haNpTYpyqgbvRqzDzj05snLE4ea4fIXNuMRzbRV_XUKDOe6X6QnPsxLm0_oKrNJ9uot101xPK4UFt1LjbeIotBu4nWiHVo4nWuRtfdQgC4TP-pi3yx03g4PxZ0XMLISufzHbQp7sob7Ai1AZBfnEaBDqTPVshQJuPhDPU5SIoxjDyXphIS6pEmRFo249T_B5rBgtquClyAsE1q2q0b2gSZ7tzFQ3nmroTOkLg2WCyuUJcT8rWNP_l3ijCHJYhiv7Zw";
+  const password = 
+ "ya29.a0AXooCgt_kBLpfMmDu397UApa9WkO-KbCohFTQspYXXg0mQjaZF1_AkWipwGxKrQu4SjmGwYEC5_m1DQI2KQNwjqSXtpfwnyPkZXppgV-qLqgoUNbhELKtFFzP1sH8nKAPADySFDfymEha0GKb1bBmu1xiOFmvvGmF6sQnF4dbGKWZelplVtekV5Ix0Xzl2LSXinInrK1A15Xrweja98jvumyBSoDSECR6fHikdrgW8GoMVlEqKtG1TsN4lQAJ1lmff1p0GGHYwHxvhCsG_79NEWnr_Qa-7y6SIg9bfbfV4snsCN0vBHdffLdLkq2hQUT5XZizABApd8jLJ1DVbORDFo60eDJZ-iQ2PXf65a7hv4JR8qhrr2Nd7a-jDWNQ4b9aIZChc-52nX56PBslRg6hYWb2tLohdZ_aCgYKAfESARASFQHGX2Mi7R5CvT7AXHFuOlshsKKbmw0423";
+ 
+ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
@@ -61,6 +65,64 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
+   void _handleSendPressedInvisible(String message) async {
+    // final textMessage = types.TextMessage(
+    //   author: _user,
+    //   createdAt: DateTime.now().millisecondsSinceEpoch,
+    //   id: const Uuid().v4(),
+    //   text: message.text,
+    // );
+
+    // _addMessage(textMessage);
+  // password at the top
+     final response = await http.post(
+      Uri.parse(
+        'https://global-dialogflow.googleapis.com/v3/projects/maximal-codex-424206-f2/locations/global/agents/3aaf65f9-e794-44f6-9916-6781890a71c9/sessions/newtest20:detectIntent',
+      ),
+      headers: {
+        'Authorization': 'Bearer $password',
+        'x-goog-user-project': 'maximal-codex-424206-f2',
+      },
+      body: jsonEncode({
+        'queryInput': {
+          'text': {
+            'text': message,
+          },
+          'languageCode': 'en',
+        },
+        'queryParams': {
+          'timeZone': 'America/Los_Angeles',
+        },
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (data['queryResult'] == null) {
+      print('error');
+    } else {
+      final agentResponse = data['queryResult']['responseMessages'][0]['text']['text'][0];
+      final textMessageAgent = types.TextMessage(
+        author: _agent,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        text: agentResponse,
+      );
+
+      _addMessage(textMessageAgent);
+
+      if( agentResponse.toLowerCase().contains(' correct') ) {
+        setState(() {
+        _userScore += 10;
+      });
+      }else if( agentResponse.toLowerCase().contains(' incorrect') ) {
+        setState(() {
+        _userScore -= 5;
+      });
+      }
+    }
+  }
+
   void _handleAttachmentPressed() {
     showModalBottomSheet<void>(
       context: context,
@@ -93,8 +155,9 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
+
+ 
   
-  String token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3NGRiYmE4ZmFlZTY5YWNhZTFiYzFiZTE5MDQ1MzY3OGY0NzI4MDMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNjE4MTA0NzA4MDU0LTlyOXMxYzRhbGczNmVybGl1Y2hvOXQ1Mm4zMm42ZGdxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzMzY0OTQzMjQxMDYwOTE2OTEyIiwiZW1haWwiOiJzYW5qdWJoYXQyMDA0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoiaW50Q09FbXRtUEFqZXdsTUFzYWcxdyIsIm5iZiI6MTcxNzQwNzE3MSwiaWF0IjoxNzE3NDA3NDcxLCJleHAiOjE3MTc0MTEwNzEsImp0aSI6ImIzYzlhY2U3ZjhjODI2OWVkYmNhYTk2ZDYwZWY3ZTQ3Yjk1MzY3ZjMifQ.MVfudYDhJtyemDTbK3MjcG3IyQ9ug1UTywPWUcD_ptn9f383cbV3Ed6fa77YPO9T6Xr-qc3LgNuE0I9n5KWuKPNebTYnOkyeMzOKI7OfrPdj3XSxwFaBYOOh3DFcboIp4BcUVseT7T6PuU7iCYDBXwc9okR4Ftmvi-gMxn-16Fzqbxra1ZZR4dlErYUJP-rNnPRp_u9y8hxnwLZ8HEgyynBtLNn53IJ3cBLob6hg4Ux3C4-DCN0EjjOCKuCtyc8imTq-nFzpiq3HaXAmeIvEkR7Ogfeh1S6N-rBMDMdeeEhBxFyJQtmXRwy1q0qd9-10bPNrg8Oux_tfsZe9smvBpQ";
 
   Future<void> _handleMediaSelection() async {
     final result = await FilePicker.platform.pickFiles(
@@ -107,6 +170,7 @@ class _ChatPageState extends State<ChatPage> {
       final base64String = base64Encode(bytes);
 
       // print(base64String);
+      print("got base64");
 
       // _handleSendPressed("sddsd");
 
@@ -123,6 +187,18 @@ class _ChatPageState extends State<ChatPage> {
       if (response.statusCode == 200) {
         print('POST request successful!');
         print(response.body);
+
+         final textMessage = types.TextMessage(
+          author: _agent,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          id: const Uuid().v4(),
+          text: "The notes you played were: " + response.body,
+        );
+
+        _addMessage(textMessage);
+        _handleSendPressedInvisible(response.body);
+        
+
       } else {
         print('POST request failed. Status code: ${response.statusCode}');
       }
@@ -188,7 +264,12 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       _messages[index] = updatedMessage;
     });
-  }
+  } 
+
+  // _handleSendPressedInvisible("DETECT NOTE");
+
+
+
 
   void _handleSendPressed(types.PartialText message) async {
     final textMessage = types.TextMessage(
@@ -200,11 +281,11 @@ class _ChatPageState extends State<ChatPage> {
 
     _addMessage(textMessage);
 
-    const password =
-        'ya29.a0AXooCgvKrgxqZzFxE5I7fB1oDmlSmTKN6sfwxaZvR9FtLn6ySWjfBIHWkvZFrFJP5c_H4g8gzMBJbk2Q_1mHT9h4HIp750dTg74fbr-zpUWMJZGNOd-kQM6PX5Jr-Y0wAMLz74MeeyWFApyCBOOez9mLXU1iVVpIlq6aWGVu7K12U-T6lI8AS9UNkRfpHgNblDRzOc9QKqS-elPrmtM4iMPt_Jp8hXo-mPWxXQDYRy5kkew76AiOyyAunkA0NBtCgVrguwPsaKjmwt0cE0yQW2GbkgmjbkxY4zX58-q7N4Q7wljbr8W6xLB2dxZhmksST5febBPQRR_f0tT291Vov-PO2rxdJ36phOCQ2E1Db36D_WBbNL6tdIC_0ix5btUSxJOfuxva2Ia9wUGx1qQlBQ_b7QYvjvVKaCgYKAbYSARASFQHGX2MiLxFBl_gYtaV1v5WHci_jFg0423';
+    // password at the top
+
     final response = await http.post(
       Uri.parse(
-        'https://global-dialogflow.googleapis.com/v3/projects/maximal-codex-424206-f2/locations/global/agents/3aaf65f9-e794-44f6-9916-6781890a71c9/sessions/newtest2:detectIntent',
+        'https://global-dialogflow.googleapis.com/v3/projects/maximal-codex-424206-f2/locations/global/agents/3aaf65f9-e794-44f6-9916-6781890a71c9/sessions/newtest20:detectIntent',
       ),
       headers: {
         'Authorization': 'Bearer $password',
