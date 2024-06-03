@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1029042840828",
+    "project_id": "maximal-codex-424206-f2",
+    "storage_bucket": "maximal-codex-424206-f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029042840828:android:8f0e833d0527bdbc1e2379",
+        "android_client_info": {
+          "package_name": "Lila.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCACxsnHXwW0rXQRzB8T2m8CIajwkHuc7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

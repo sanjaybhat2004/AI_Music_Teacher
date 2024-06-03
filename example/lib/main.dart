@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 // Import 'package:flutter_svg/flutter_svg.dart';.
@@ -40,9 +39,12 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List<types.Message> _messages = [];
+  final List<types.Message> _messages = [];
   final _user = const types.User(
     id: '82091008-a484-4a89-ae75-a22bf8d6f3ac',
+  );
+  final _agent = const types.User(
+    id: 'f8b8f3b0-6b6b-4b7b-8b3b-3b6b6b8f8b8f',
   );
 
   @override
@@ -205,7 +207,7 @@ class _ChatPageState extends State<ChatPage> {
     });
   }
 
-  void _handleSendPressed(types.PartialText message) {
+  void _handleSendPressed(types.PartialText message) async {
     final textMessage = types.TextMessage(
       author: _user,
       createdAt: DateTime.now().millisecondsSinceEpoch,
@@ -214,6 +216,44 @@ class _ChatPageState extends State<ChatPage> {
     );
 
     _addMessage(textMessage);
+
+    const password =
+        'ya29.a0AXooCgti069KCI3eTbZrt_dJxMWs4ksVVgE2OQflMDLefca6YJLOBI8F1IOsSmZ7qWvSqz6nN5hPEz8Gl78R8egQMJz3t6kwi4joVO9eKfkC5LCBLrWF1YkRVv1fz8T6iD7jRBZpsE6AFAW2JuN8YGJDha9UlTDlrQyAFyuGQz4aCgYKAbQSARISFQHGX2Miy6_C6G_-aB5alayEyctCaA0178';
+    final response = await http.post(
+      Uri.parse(
+        'https://global-dialogflow.googleapis.com/v3/projects/maximal-codex-424206-f2/locations/global/agents/3aaf65f9-e794-44f6-9916-6781890a71c9/sessions/newtest:detectIntent',
+      ),
+      headers: {
+        'Authorization': 'Bearer $password',
+        'x-goog-user-project': 'maximal-codex-424206-f2',
+      },
+      body: jsonEncode({
+        'queryInput': {
+          'text': {
+            'text': message.text,
+          },
+          'languageCode': 'en',
+        },
+        'queryParams': {
+          'timeZone': 'America/Los_Angeles',
+        },
+      }),
+    );
+
+    final data = jsonDecode(response.body);
+
+    if (data['queryResult'] == null) {
+      print('error');
+    } else {
+      final textMessageAgent = types.TextMessage(
+        author: _agent,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: const Uuid().v4(),
+        text: data['queryResult']['responseMessages'][0]['text']['text'][0],
+      );
+
+      _addMessage(textMessageAgent);
+    }
   }
 
   // void _loadMessages() async {

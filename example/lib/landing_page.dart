@@ -51,7 +51,6 @@ class LandingPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => const ChatPage()),
                 );},
-                    child: Text('Let\'s Learn'),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(9.0),
@@ -59,6 +58,7 @@ class LandingPage extends StatelessWidget {
                       foregroundColor: Colors.white, // Text color
                       backgroundColor: Color(0xFF482E99), // Button background color
                     ),
+                    child: Text('Let\'s Learn'),
                   ),
                   SizedBox(height: 50.0), // Adjust spacing as needed
 
