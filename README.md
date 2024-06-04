@@ -1,6 +1,6 @@
 # Lila: Your AI Music Teacher!
 
-Demo link: [](https://www.youtube.com/watch?v=9XOOs6h54hQ)
+[Demo link](https://www.youtube.com/watch?v=9XOOs6h54hQ)
 
 ## What it does
 
