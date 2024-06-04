@@ -6,6 +6,8 @@ Our project teaches about Music, and has 2 main functionalities: 1) Curious abou
 
 2) Ever playing the Piano alone and wondered if you are going wrong? One of its features we are most proud of is the ability to identify notes: simply play a tune, record it and send it to the app, and it will analyze and identify the notes for you, helping you perfect your notes.
 
+![Alt_text](https://raw.githubusercontent.com/sanjaybhat2004/AI_Music_Teacher/newest_branch/demo_images/homepage.png)
+
 ## How we built it
 
 We used the combination of Vertex AI Agents, Flutter to make the app.
@@ -30,6 +32,8 @@ In Vertex AI we used the features as follows:
 
 3) Breaking the audio file into separate pieces to be processed: One of the biggest challenges was to find out heuristics, to find out the places where to break the given audio file containing many notes, so that we can get separate audio files to be processed by the note detector. This is an ongoing research domain, so we had to find out heuristics good enough for our usecase.
 
+![Alt_text](https://raw.githubusercontent.com/sanjaybhat2004/AI_Music_Teacher/newest_branch/demo_images/note_separation.png)
+
 ## Accomplishments that we're proud of
 
 We are happy we were able to complete the goals of our project and help more people learn Music. We hope that new generation of Musicians take advantage of this solution built by us. People need not fear about learning Music theory any longer.
@@ -37,7 +41,10 @@ We are happy we were able to complete the goals of our project and help more peo
 ## What we learned
 
 As we built this app, we ourselves also learned more about Music Theory. We also learned how to make Flutter apps, as well as how to use Vertex AI Agent to make conversational chat bots. We learnt how to take advantage Vertex AI tools and Vertex AI Data stores, to make the process simpler. We also learned about Digital Signal Processing, and how you can use the FFT algorithm to process pieces of sound.
-What's next for Lila, your AI Music Teacher
+![Alt_text](https://raw.githubusercontent.com/sanjaybhat2004/AI_Music_Teacher/newest_branch/demo_images/chatpage.png)
+
+## What's next for Lila, your AI Music Teacher
+
 
 We plan to expand the app to support additional musical instruments beyond piano. We will release the app in Play Store in order for people to learn Music. This is our way of making sure that other don't face the challenges we did.
 
@@ -52,6 +59,8 @@ Built With
 Submitted to
 
     Google Cloud Vertex AI Agent Builder Hackathon
+
+Devpost link: [link](https://devpost.com/software/lila-your-ai-music-teacher)
     
 ## Members:
 - Sanjay Bhat
