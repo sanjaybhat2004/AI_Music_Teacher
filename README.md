@@ -4,7 +4,9 @@
 
 ## What it does
 
-Our project teaches about Music, and has 2 main functionalities: 1) Curious about the intricacies of Musical Theory? Don't worry, It teaches the user about the specifics of Western Musical Theory. To make the learn fun, it incorporates things like asking a quiz, after the lessons, and giving achievement points and so.
+Our project teaches about Music, and has 2 main functionalities: 
+
+1) Curious about the intricacies of Musical Theory? Don't worry, It teaches the user about the specifics of Western Musical Theory. To make the learn fun, it incorporates things like asking a quiz, after the lessons, and giving achievement points and so.
 
 2) Ever playing the Piano alone and wondered if you are going wrong? One of its features we are most proud of is the ability to identify notes: simply play a tune, record it and send it to the app, and it will analyze and identify the notes for you, helping you perfect your notes.
 
