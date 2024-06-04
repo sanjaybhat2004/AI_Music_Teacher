@@ -42,20 +42,19 @@ What's next for Lila, your AI Music Teacher
 We plan to expand the app to support additional musical instruments beyond piano. We will release the app in Play Store in order for people to learn Music. This is our way of making sure that other don't face the challenges we did.
 
 Built With
-
-    Dart
-    Firebase
-    Flutter
-    Github
-    Python
-    Vertex AI
+- Dart
+- Firebase
+- Flutter
+- Github
+- Python
+- Vertex AI
 
 Submitted to
 
     Google Cloud Vertex AI Agent Builder Hackathon
     
 ## Members:
-Sanjay Bhat
-Smit Rathod
-Alen Basil Thelappilly
+- Sanjay Bhat
+- Smit Rathod
+- Alen Basil Thelappilly
 
