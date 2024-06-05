@@ -201,6 +201,15 @@ class _ChatPageState extends State<ChatPage> {
 
       } else {
         print('POST request failed. Status code: ${response.statusCode}');
+        final textMessage = types.TextMessage(
+          author: _agent,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          id: const Uuid().v4(),
+          text: "Vertex AI API token outdated",
+        );
+                _addMessage(textMessage);
+
+        
       }
     }
   }
@@ -308,6 +317,13 @@ class _ChatPageState extends State<ChatPage> {
 
     if (data['queryResult'] == null) {
       print('error');
+          final textMessage = types.TextMessage(
+          author: _agent,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          id: const Uuid().v4(),
+          text: "Vertex AI API token outdated",
+        );
+                _addMessage(textMessage);
     } else {
       final agentResponse = data['queryResult']['responseMessages'][0]['text']['text'][0];
       final textMessageAgent = types.TextMessage(
