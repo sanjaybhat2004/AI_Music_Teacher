@@ -22,9 +22,9 @@ void main() {
 }
 
   String token =
-    "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3NGRiYmE4ZmFlZTY5YWNhZTFiYzFiZTE5MDQ1MzY3OGY0NzI4MDMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzMjU1NTk0MDU1OS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjMyNTU1OTQwNTU5LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzMzY0OTQzMjQxMDYwOTE2OTEyIiwiZW1haWwiOiJzYW5qdWJoYXQyMDA0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoid3M1THFqZFZ3VldPcWk2NDdObU11QSIsImlhdCI6MTcxNzYxNjcxNCwiZXhwIjoxNzE3NjIwMzE0fQ.haRTJh7pWpJqmwRXife2rvmYwvnRAzRXJArPKBBfUliW2Z2r4e2Ol2rvEIQcENCTYzOU4Vp6jk_2ISnP1G2CGEkEuueppWPeSOK6ZdoGobJHXpR_mfVcrHEM8tAJwc7VK-gl0OL5Qemms7OMuVJAqymApdiCWno_AVWQbDbAb9OGvo3wue6yRgtXecKKCQY7_IP8-TwJVmr72P0f9INRLPYWgB3-5Al6k67GKgFp56h1o9ds8z17MzOnubd1muIYtLelDlCUBRrqnI20tSTUN73Khme-s3y5DAN67Yei661tfytDfYzKc48FsNxzl1kuxZjZzytBcyAG7XMUzyi50g";
+    "eyJhbGciOiJSUzI1NiIsImtpZCI6IjY3NGRiYmE4ZmFlZTY5WNhZTFiYzFiZTE5MDQ1MzY3OGY0NzI4MDMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzMjU1NTk0MDU1OS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjMyNTU1OTQwNTU5LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzMzY0OTQzMjQxMDYwOTE2OTEyIiwiZW1haWwiOiJzYW5qdWJoYXQyMDA0QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoid3M1THFqZFZ3VldPcWk2NDdObU11QSIsImlhdCI6MTcxNzYxNjcxNCwiZXhwIjoxNzE3NjIwMzE0fQ.haRTJh7pWpJqmwRXife2rvmYwvnRAzRXJArPKBBfUliW2Z2r4e2Ol2rvEIQcENCTYzOU4Vp6jk_2ISnP1G2CGEkEuueppWPeSOK6ZdoGobJHXpR_mfVcrHEM8tAJwc7VK-gl0OL5Qemms7OMuVJAqymApdiCWno_AVWQbDbAb9OGvo3wue6yRgtXecKKCQY7_IP8-TwJVmr72P0f9INRLPYWgB3-5Al6k67GKgFp56h1o9ds8z17MzOnubd1muIYtLelDlCUBRrqnI20tSTUN73Khme-s3y5DAN67Yei661tfytDfYzKc48FsNxzl1kuxZjZzytBcyAG7XMUzyi50g";
 const password = 
-    "ya29.a0AXooCgstkMZQhEyCWVn7-kq6WlfO469jyOeLeh0zTumhLkUbmQaufJXsqT57KDRQDVVa5_M_oKSLE7-3XhRRnvd6Yy5cWbzZmB1eoNIlZ8egxaPw6qa4ULmvmLp7YaUcWjwLu-OIiBjgCV0eztiFaLyKwTvB-gEpVGYn25G3-AaCgYKAW0SARASFQHGX2MibNNBSTY90XONVDp0eORXfw0177";
+    "ya29.a0AXooCgstkMZQhEyCWVn7-kq6WlfO469jyOeLeh0zTumhLkUmQaufJXsqT57KDRQDVVa5_M_oKSLE7-3XhRRnvd6Yy5cWbzZmB1eoNIlZ8egxaPw6qa4ULmvmLp7YaUcWjwLu-OIiBjgCV0eztiFaLyKwTvB-gEpVGYn25G3-AaCgYKAW0SARASFQHGX2MibNNBSTY90XONVDp0eORXfw0177";
  class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -100,6 +100,13 @@ class _ChatPageState extends State<ChatPage> {
 
     if (data['queryResult'] == null) {
       print('error');
+        final textMessage = types.TextMessage(
+          author: _agent,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          id: const Uuid().v4(),
+          text: "Vertex AI API token outdated",
+        );
+                _addMessage(textMessage);
     } else {
       final agentResponse = data['queryResult']['responseMessages'][0]['text']['text'][0];
       final textMessageAgent = types.TextMessage(
