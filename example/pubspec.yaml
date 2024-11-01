@@ -80,6 +80,7 @@ flutter:
     - assets/token.txt
     - assets/messages.json
     - assets/images/robot.svg
+    - assets/wallpaper.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
